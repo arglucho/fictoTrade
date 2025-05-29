@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main>
+    <h1>¡Bienvenido al Intercambio de Objetos Imaginarios!</h1>
+    <p>Explorá, creá e intercambiá objetos únicos.</p>
+    <section>
+  <h2>Crear nuevo objeto imaginario</h2>
+  <form action="/crear" method="POST">
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" id="nombre" required>
+
+    <label for="descripcion">Descripción:</label>
+    <input type="text" name="descripcion" id="descripcion" required>
+
+    <label for="poder">Poder especial:</label>
+    <input type="text" name="poder" id="poder" required>
+
+    <button type="submit">Crear Objeto</button>
+  </form>
+</section>
+<section>
+  <h2>Objetos creados:</h2>
+
+  <% if (objetos.length === 0) { %>
+    <p>No hay objetos aún.</p>
+  <% } else { %>
+    <ul>
+  <% objetos.forEach(obj => { %>
+    <li>
+      <strong><%= obj.nombre %></strong>: <%= obj.descripcion %> (Poder: <%= obj.poder %>)
+      - <a href="/objeto/<%= obj.id %>">Ver más</a>
+    </li>
+  <% }) %>
+</ul>
+  <% } %>
+</section>
+
+
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,41 @@
+body {
+  font-family: sans-serif;
+  margin: 2rem;
+  background-color: #f0f0f0;
+}
+
+form {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input, button {
+  display: block;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+ul {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+li {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: #4a90e2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

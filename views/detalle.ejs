@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <h1><%= objeto.nombre %></h1>
+  <p><strong>Descripción:</strong> <%= objeto.descripcion %></p>
+  <p><strong>Poder:</strong> <%= objeto.poder %></p>
+
+  <p><a href="/editar/<%= objeto.id %>">Editar objeto</a></p>
+  <form action="/eliminar/<%= objeto.id %>" method="POST" onsubmit="return confirm('¿Seguro que querés eliminar este objeto?');">
+  <button type="submit">Eliminar objeto</button>
+</form>
+
+  <a href="/">← Volver al inicio</a>
+</body>
+</html>
