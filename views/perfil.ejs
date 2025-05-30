@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tu Perfil</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .profile-container {
+      background: #111;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    a {
+      color: #1da1f2;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <h1>Hola, <%= usuario.username %> 👋</h1>
+    <p>Estoy muy contento de que hayas llegado hasta aqui, esto te hace una persona muy importante para mi. Gracias por ayudarme a crecer.</p>
+    <p>De momento no te puedo ofrecer mucho mas que esto, que tampoco es poco pero quizas esperabas mas jaja, Se vienen cositas 😎</p>
+    <a href="/logout">Cerrar sesión</a>
+  </div>
+</body>
+</html>

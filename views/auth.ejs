@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar sesión o registrarse</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .auth-container {
+      background: #111;
+      padding: 30px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #333;
+      border-radius: 6px;
+      background: #000;
+      color: #fff;
+    }
+    button {
+      padding: 10px;
+      background: #1da1f2;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .toggle {
+      margin-top: 15px;
+      text-align: center;
+    }
+    .toggle button {
+      background: none;
+      color: #1da1f2;
+      border: none;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
+    .flash-message {
+      background-color: #f44336;
+      color: white;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <h2 id="form-title">Registrarse</h2>
+
+    <% if (error) { %>
+      <div class="flash-message"><%= error %></div>
+    <% } %>
+
+    <% if (success) { %>
+      <div class="flash-message" style="background: green;"><%= success %></div>
+    <% } %>
+
+    <!-- Formulario de Registro -->
+    <form id="register-form" action="/registro" method="POST">
+      <input type="text" name="username" placeholder="Nombre de usuario" required>
+      <input type="password" name="password" placeholder="Contraseña" required>
+      <button type="submit">Registrarse</button>
+    </form>
+
+    <!-- Formulario de Login -->
+    <form id="login-form" class="hidden" action="/login" method="POST">
+      <input type="text" name="username" placeholder="Nombre de usuario" required>
+      <input type="password" name="password" placeholder="Contraseña" required>
+      <button type="submit">Iniciar sesión</button>
+    </form>
+
+    <div class="toggle">
+      <p id="toggle-text">¿Ya tenés cuenta? <button onclick="toggleForms()">Iniciar sesión</button></p>
+    </div>
+  </div>
+
+  <script>
+    function toggleForms() {
+      const registerForm = document.getElementById("register-form");
+      const loginForm = document.getElementById("login-form");
+      const title = document.getElementById("form-title");
+      const toggleText = document.getElementById("toggle-text");
+
+      if (registerForm.classList.contains("hidden")) {
+        registerForm.classList.remove("hidden");
+        loginForm.classList.add("hidden");
+        title.innerText = "Registrarse";
+        toggleText.innerHTML = '¿Ya tenés cuenta? <button onclick="toggleForms()">Iniciar sesión</button>';
+      } else {
+        registerForm.classList.add("hidden");
+        loginForm.classList.remove("hidden");
+        title.innerText = "Iniciar sesión";
+        toggleText.innerHTML = '¿No tenés cuenta? <button onclick="toggleForms()">Registrarse</button>';
+      }
+    }
+
+    // Mostrar el formulario correspondiente basado en errores
+    <% if (errorFrom === 'login') { %>
+      document.addEventListener('DOMContentLoaded', () => {
+        toggleForms();
+      });
+    <% } %>
+  </script>
+</body>
+</html>
