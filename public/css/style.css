@@ -1,59 +1,151 @@
-.container {
-  max-width: 800px;
-  margin: 0 auto;
+/* Contenedor principal */
+.layout {
+  display: flex;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
 }
 
-body {
-  font-family: sans-serif;
-  margin: 2rem;
-  background-color: #f0f0f0;
+/* Sidebar izquierdo y derecho */
+aside.sidebar,
+aside.rightbar {
+  width: 240px;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
-form {
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+aside.sidebar {
+  border-right: 1px solid #222;
 }
 
-input, button {
-  display: block;
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  width: 100%;
-  max-width: 400px;
+aside.rightbar {
+  border-left: 1px solid #222;
 }
 
-ul {
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* Área central de feed */
+main.feed {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background-color: #111;
 }
 
-li {
-  margin-bottom: 1rem;
-}
-
-a {
-  color: #4a90e2;
+/* Menú lateral */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  color: #fff;
   text-decoration: none;
+  font-size: 16px;
 }
 
-a:hover {
-  text-decoration: underline;
+.menu-item:hover {
+  color: #1da1f2;
 }
 
-button {
-  background-color: #4a90e2;
-  color: white;
-  border: none;
-  cursor: pointer;
+/* Nuevo post (formulario de creación) */
+.new-post {
+  background: #111;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.new-post h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.new-post input,
+.new-post textarea {
+  width: 100%;
+  background: #000;
+  border: 1px solid #333;
+  color: #fff;
+  padding: 8px;
   border-radius: 4px;
-  transition: background-color 0.2s ease;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
-button:hover {
-  background-color: #357ABD;
+.new-post button {
+  float: right;
+  background: #1da1f2;
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.new-post button:hover {
+  background: #0d8de1;
+}
+
+/* Tarjetas de post (objetos) */
+.post-card {
+  background: #222;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.post-card h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+}
+
+.post-card p {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.post-card a {
+  color: #1da1f2;
+}
+
+/* Widgets de la barra derecha */
+.widget {
+  background: #111;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.widget h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.widget ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.widget li {
+  padding: 8px 0;
+  border-bottom: 1px solid #222;
+  font-size: 14px;
+}
+
+.widget li:last-child {
+  border-bottom: none;
+}
+
+/* Caja de búsqueda */
+.search-box input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 20px;
+  border: 1px solid #333;
+  background: #000;
+  color: #fff;
+  box-sizing: border-box;
+  font-size: 14px;
 }

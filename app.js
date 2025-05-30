@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Objeto = require('./models/Objeto'); // tu modelo de objetos
+const Objeto = require('./models/Objeto');
+const path = require('path');
 
 mongoose.connect('mongodb://localhost:27017/fictoTrade', {
   useNewUrlParser: true,
@@ -12,7 +13,6 @@ mongoose.connect('mongodb://localhost:27017/fictoTrade', {
 });
 
 const app = express();
-const path = require('path');
 
 // Configuración del motor de vistas
 app.set('view engine', 'ejs');
@@ -22,36 +22,39 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // Ruta principal
 app.get('/', async (req, res) => {
-  const objetos = await Objeto.find(); // busca todos
+  const objetos = await Objeto.find();
   res.render('index', {
     title: 'FictoTrade – Inicio',
     objetos,
+    error: null
   });
 });
 
 // Ruta para crear un nuevo objeto
 app.post('/crear', async (req, res) => {
   const { nombre, descripcion, poder } = req.body;
-  
-  if (!nombre || !descripcion || isNaN(parseInt(poder))) {
-    return res.status(400).send('Datos inválidos');
-  }
-  
-  const nuevoObjeto = new Objeto({
-    nombre,
-    descripcion,
-    poder: parseInt(poder),
-  });
 
-  await nuevoObjeto.save(); // guarda en Mongo
-  res.redirect('/');
+  try {
+    const nuevoObjeto = new Objeto({
+      nombre,
+      descripcion,
+      poder: parseInt(poder),
+    });
+    await nuevoObjeto.save();
+    res.redirect('/');
+  } catch (err) {
+    const objetos = await Objeto.find();
+    res.status(400).render('index', {
+      title: 'FictoTrade – Error',
+      objetos,
+      error: err.message,
+    });
+  }
 });
 
-
-// Ruta para ver detalle de un objeto por su ID
+// Ruta para ver detalle de un objeto
 app.get('/objeto/:id', async (req, res) => {
   const objeto = await Objeto.findById(req.params.id);
   if (!objeto) return res.status(404).send('Objeto no encontrado');
@@ -62,8 +65,7 @@ app.get('/objeto/:id', async (req, res) => {
   });
 });
 
-
-// Ruta para ver el formulario de edicion
+// Ruta para ver formulario de edición
 app.get('/editar/:id', async (req, res) => {
   const objeto = await Objeto.findById(req.params.id);
   if (!objeto) return res.status(404).send('Objeto no encontrado');
@@ -71,31 +73,31 @@ app.get('/editar/:id', async (req, res) => {
   res.render('editar', { objeto });
 });
 
-
-// Ruta POST para guardar cambios
+// Guardar cambios editados
 app.post('/editar/:id', async (req, res) => {
   const { nombre, descripcion, poder } = req.body;
-  const objeto = await Objeto.findById(req.params.id);
-  if (!objeto) return res.status(404).send('Objeto no encontrado');
 
-  objeto.nombre = nombre;
-  objeto.descripcion = descripcion;
-  objeto.poder = parseInt(poder);
-  await objeto.save();
+  try {
+    const objeto = await Objeto.findById(req.params.id);
+    if (!objeto) return res.status(404).send('Objeto no encontrado');
 
-  res.redirect(`/objeto/${objeto.id}`);
+    objeto.nombre = nombre;
+    objeto.descripcion = descripcion;
+    objeto.poder = parseInt(poder);
+    await objeto.save();
+
+    res.redirect(`/objeto/${objeto.id}`);
+  } catch (err) {
+    res.status(400).send('Error al editar: ' + err.message);
+  }
 });
 
-
-// Ruta para eliminar (POST)
+// Eliminar objeto
 app.post('/eliminar/:id', async (req, res) => {
   await Objeto.findByIdAndDelete(req.params.id);
   res.redirect('/');
 });
 
-
-
-// 🚀 Arrancar el servidor
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);

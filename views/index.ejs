@@ -4,50 +4,107 @@
   <meta charset="UTF-8">
   <title><%= title %></title>
   <link rel="stylesheet" href="/css/style.css">
+  <style>
+    /* --- Layout de 3 columnas --- */
+    .layout { display: flex; height: 100vh; background: #000; color: #fff; }
+    aside.sidebar, aside.rightbar { width: 240px; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+    aside.sidebar { border-right: 1px solid #222; }
+    aside.rightbar { border-left: 1px solid #222; }
+    main.feed { flex: 1; padding: 20px; overflow-y: auto; }
+
+    /* --- Menú lateral --- */
+    .menu-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; color: #fff; text-decoration: none; }
+    .menu-item:hover { color: #1da1f2; }
+
+    /* --- Nuevo post (creación de objeto) --- */
+    .new-post { background: #111; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+    .new-post input, .new-post textarea { width: 100%; background: #000; border: 1px solid #333; color: #fff; padding: 8px; border-radius: 4px; margin-bottom: 10px; }
+    .new-post button { float: right; background: #1da1f2; border: none; color: #fff; padding: 8px 16px; border-radius: 20px; cursor: pointer; }
+
+    /* --- Tarjeta de objeto en feed --- */
+    .post-card { background: #111; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+    .post-card h3 { margin: 0 0 5px; }
+    .post-card p { margin: 0; }
+
+    /* --- Barra derecha --- */
+    .widget { background: #111; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+    .widget h3 { margin-top: 0; }
+    .widget ul { list-style: none; padding: 0; margin: 0; }
+    .widget li { padding: 8px 0; border-bottom: 1px solid #222; }
+    .widget li:last-child { border-bottom: none; }
+    .search-box input { width: 100%; padding: 8px; border-radius: 20px; border: 1px solid #333; background: #000; color: #fff; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <%- include('partials/header') %>
+  <div class="layout">
+    <!-- Sidebar izquierdo -->
+    <aside class="sidebar">
+      <%- include('partials/header') %>
+      <a href="/" class="menu-item">🏠 Inicio</a>
+      <a href="/explorar" class="menu-item">🔍 Explorar</a>
+      <a href="/notificaciones" class="menu-item">🔔 Notificaciones</a>
+      <a href="/mensajes" class="menu-item">✉️ Mensajes</a>
+      <a href="/perfil" class="menu-item">👤 Perfil</a>
+      <a href="/guardados" class="menu-item">🔖 Guardados</a>
+      <a href="/comunidades" class="menu-item">👥 Comunidades</a>
+    </aside>
 
-  <main>
-    <h1>¡Bienvenido al Intercambio de Objetos Imaginarios!</h1>
-    <p>Explorá, creá e intercambiá objetos únicos.</p>
-    <section>
-  <h2>Crear nuevo objeto imaginario</h2>
-  <form action="/crear" method="POST">
-    <label for="nombre">Nombre:</label>
-    <input type="text" name="nombre" id="nombre" required>
+    <!-- Feed central -->
+    <main class="feed">
+      <!-- Formulario para crear objeto -->
+      <div class="new-post">
+        <h3>¿Qué objeto imaginario creas hoy?</h3>
+        <form action="/crear" method="POST">
+          <input type="text" name="nombre" placeholder="Nombre" required>
+          <textarea name="descripcion" placeholder="Descripción" required></textarea>
+          <input type="number" name="poder" placeholder="Poder" min="0" required>
+          <button type="submit">Crear</button>
+        </form>
+      </div>
 
-    <label for="descripcion">Descripción:</label>
-    <input type="text" name="descripcion" id="descripcion" required>
+      <!-- Listado de objetos en feed -->
+      <% if (objetos.length === 0) { %>
+        <p>No hay objetos aún. Sé el primero en crear uno.</p>
+      <% } else { %>
+        <% objetos.forEach(obj => { %>
+          <div class="post-card">
+            <h3><%= obj.nombre %> (Poder: <%= obj.poder %>)</h3>
+            <p><%= obj.descripcion %></p>
+            <p><a href="/objeto/<%= obj._id %>">Ver detalle</a></p>
+          </div>
+        <% }) %>
+      <% } %>
+    </main>
 
-    <label for="poder">Poder especial:</label>
-    <input type="text" name="poder" id="poder" required>
-
-    <button type="submit">Crear Objeto</button>
-  </form>
-</section>
-<section>
-  <h2>Objetos creados:</h2>
-
-  <% if (objetos.length === 0) { %>
-    <p>No hay objetos aún.</p>
-  <% } else { %>
-    <ul>
-  <% objetos.forEach(obj => { %>
-    <li>
-      <strong><%= obj.nombre %></strong>: <%= obj.descripcion %> (Poder: <%= obj.poder %>)
-      - <a href="/objeto/<%= obj.id %>">Ver más</a>
-    </li>
-  <% }) %>
-</ul>
-  <% } %>
-</section>
-
-
-  </main>
-
-  <%- include('partials/footer') %>
+    <!-- Barra lateral derecha -->
+    <aside class="rightbar">
+      <div class="widget search-box">
+        <input type="text" placeholder="Buscar">
+      </div>
+      <div class="widget">
+        <h3>Publicidad</h3>
+        <div style="background:#222;height:100px;display:flex;align-items:center;justify-content:center;">
+          Posible spot para publicidad :D
+        </div>
+      </div>
+      <div class="widget">
+        <h3>Objetos Populares</h3>
+        <ul>
+          <li>Capa Mágica</li>
+          <li>Varita Invisible</li>
+          <li>Mascota de Combate 3000</li>
+        </ul>
+      </div>
+      <div class="widget">
+        <h3>A quién seguir</h3>
+        <ul>
+          <li>@kaijuqueen <button>Seguir</button></li>
+          <li>@kheayf <button>Seguir</button></li>
+          <li>@Nafernandezzz <button>Seguir</button></li>
+        </ul>
+      </div>
+    </aside>
   </div>
+  <%- include('partials/footer') %>
 </body>
 </html>
