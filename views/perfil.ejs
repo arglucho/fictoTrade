@@ -2,38 +2,51 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Tu Perfil</title>
+  <title><%= title %></title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    body {
-      background: #000;
-      color: #fff;
-      font-family: sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .profile-container {
-      background: #111;
-      padding: 30px;
-      border-radius: 12px;
-      text-align: center;
-    }
-    a {
-      color: #1da1f2;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 20px;
-    }
   </style>
 </head>
 <body>
   <div class="profile-container">
-    <h1>Hola, <%= usuario.username %> 👋</h1>
-    <p>Estoy muy contento de que hayas llegado hasta aqui, esto te hace una persona muy importante para mi. Gracias por ayudarme a crecer.</p>
-    <p>De momento no te puedo ofrecer mucho mas que esto, que tampoco es poco pero quizas esperabas mas jaja, Se vienen cositas 😎</p>
-    <a href="/logout">Cerrar sesión</a>
+    <h1>Perfil de <%= usuario.username %></h1>
+
+    <% if (currentUser && currentUser.username === usuario.username) { %>
+      <p style="text-align:center;">Este es tu inventario personal.</p>
+    <% } else { %>
+      <p style="text-align:center;">Estos son los objetos de <strong><%= usuario.username %></strong>.</p>
+    <% } %>
+
+    <div class="inventario">
+      <% if (inventario.length === 0) { %>
+        <p>No hay objetos para mostrar.</p>
+      <% } else { %>
+        <ul>
+          <% inventario.forEach(obj => { %>
+            <li>
+              <h3><%= obj.nombre %> <span style="font-size:0.9rem;color:#aaa;">(Poder: <%= obj.poder %>)</span></h3>
+              <p><%= obj.descripcion %></p>
+              <% if (currentUser && currentUser._id.toString() === obj.owner.toString()) { %>
+                <a href="/objeto/<%= obj._id %>">Ver</a>
+                <a href="/editar/<%= obj._id %>">Editar</a>
+                <form style="display:inline;" action="/eliminar/<%= obj._id %>" method="POST" onsubmit="return confirm('¿Eliminar objeto?');">
+                  <button type="submit" class="btn-eliminar">Eliminar</button>
+                </form>
+              <% } else { %>
+                <a href="/objeto/<%= obj._id %>">Ver más</a>
+              <% } %>
+            </li>
+          <% }); %>
+        </ul>
+      <% } %>
+    </div>
+
+    <% if (currentUser && currentUser.username === usuario.username) { %>
+      <p style="text-align:center;"><a href="/">← Volver al home</a></p>
+      <a class="cerrar-sesion" href="/logout">Cerrar sesión</a>
+    <% } else { %>
+      <p style="text-align:center;"><a href="/">← Volver al home</a></p>
+    <% } %>
   </div>
 </body>
 </html>

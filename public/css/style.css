@@ -1,12 +1,20 @@
-/* Contenedor principal */
+/* General */
+body {
+  background: #000;
+  color: #fff;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Layout de 3 columnas */
 .layout {
   display: flex;
   height: 100vh;
-  background-color: #000;
+  background: #000;
   color: #fff;
 }
 
-/* Sidebar izquierdo y derecho */
 aside.sidebar,
 aside.rightbar {
   width: 240px;
@@ -15,15 +23,9 @@ aside.rightbar {
   overflow-y: auto;
 }
 
-aside.sidebar {
-  border-right: 1px solid #222;
-}
+aside.sidebar { border-right: 1px solid #222; }
+aside.rightbar { border-left: 1px solid #222; }
 
-aside.rightbar {
-  border-left: 1px solid #222;
-}
-
-/* Área central de feed */
 main.feed {
   flex: 1;
   padding: 20px;
@@ -42,24 +44,20 @@ main.feed {
   text-decoration: none;
   font-size: 16px;
 }
-
 .menu-item:hover {
   color: #1da1f2;
 }
 
-/* Nuevo post (formulario de creación) */
+/* Nuevo post */
 .new-post {
   background: #111;
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 20px;
 }
-
 .new-post h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
+  margin: 0 0 10px;
 }
-
 .new-post input,
 .new-post textarea {
   width: 100%;
@@ -71,7 +69,6 @@ main.feed {
   margin-bottom: 10px;
   box-sizing: border-box;
 }
-
 .new-post button {
   float: right;
   background: #1da1f2;
@@ -81,64 +78,56 @@ main.feed {
   border-radius: 20px;
   cursor: pointer;
 }
-
 .new-post button:hover {
   background: #0d8de1;
 }
 
-/* Tarjetas de post (objetos) */
+/* Post card */
 .post-card {
   background: #222;
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 20px;
 }
-
 .post-card h3 {
   margin: 0 0 5px;
   font-size: 18px;
 }
-
 .post-card p {
   margin: 0 0 10px;
   font-size: 14px;
 }
-
 .post-card a {
   color: #1da1f2;
 }
 
-/* Widgets de la barra derecha */
+/* Widgets */
 .widget {
   background: #111;
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 20px;
 }
-
 .widget h3 {
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 18px;
 }
-
 .widget ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .widget li {
   padding: 8px 0;
   border-bottom: 1px solid #222;
   font-size: 14px;
 }
-
 .widget li:last-child {
   border-bottom: none;
 }
 
-/* Caja de búsqueda */
+/* Search box */
 .search-box input {
   width: 100%;
   padding: 8px;
@@ -148,4 +137,166 @@ main.feed {
   color: #fff;
   box-sizing: border-box;
   font-size: 14px;
+}
+
+/* Flash messages */
+.flash-message {
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.flash-message.error {
+  background: #f44336;
+  color: white;
+}
+.flash-message.success {
+  background: #4caf50;
+  color: white;
+}
+
+/* Perfil / Inventario */
+.profile-container,
+.edit-container,
+.detalle-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: #111;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+.edit-container,
+.detalle-container {
+  max-width: 600px;
+}
+h1 {
+  margin: 0 0 20px;
+  text-align: center;
+  font-size: 1.8rem;
+}
+.inventario {
+  margin-top: 20px;
+}
+.inventario ul {
+  list-style: none;
+  padding: 0;
+}
+.inventario li {
+  background: #222;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+.inventario li h3 {
+  margin: 0 0 5px;
+}
+.inventario li p {
+  margin: 0 0 10px;
+}
+.inventario li a {
+  color: #1da1f2;
+  text-decoration: none;
+  margin-right: 10px;
+}
+.inventario li a:hover {
+  text-decoration: underline;
+}
+.btn-eliminar {
+  background: none;
+  border: none;
+  color: #f44336;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-left: 10px;
+}
+.btn-eliminar:hover {
+  text-decoration: underline;
+}
+
+/* Botón cerrar sesión */
+.cerrar-sesion {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #f44336;
+  text-decoration: none;
+}
+.cerrar-sesion:hover {
+  text-decoration: underline;
+}
+
+/* Formularios generales */
+form {
+  display: flex;
+  flex-direction: column;
+}
+label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+input,
+textarea {
+  padding: 8px;
+  margin-top: 5px;
+  background: #000;
+  border: 1px solid #333;
+  color: #fff;
+  border-radius: 4px;
+}
+button {
+  margin-top: 20px;
+  background: #1da1f2;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+button:hover {
+  background: #0d8bd1;
+}
+
+/* Enlaces de navegación */
+.link-back {
+  margin-top: 15px;
+  text-align: center;
+}
+.link-back a {
+  color: #1da1f2;
+  text-decoration: none;
+}
+.link-back a:hover {
+  text-decoration: underline;
+}
+
+/* Detalle de objetos */
+p {
+  margin: 10px 0;
+}
+.acciones {
+  margin-top: 20px;
+  text-align: center;
+}
+.acciones a,
+.acciones button {
+  margin: 0 10px;
+  background: #1da1f2;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.acciones a:hover,
+.acciones button:hover {
+  background: #0d8bd1;
+}
+.acciones .btn-eliminar {
+  background: #f44336;
+}
+.acciones .btn-eliminar:hover {
+  background: #da190b;
 }

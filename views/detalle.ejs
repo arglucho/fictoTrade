@@ -4,17 +4,25 @@
   <meta charset="UTF-8">
   <title><%= title %></title>
   <link rel="stylesheet" href="/css/style.css">
+  <style></style>
 </head>
 <body>
-  <h1><%= objeto.nombre %></h1>
-  <p><strong>Descripción:</strong> <%= objeto.descripcion %></p>
-  <p><strong>Poder:</strong> <%= objeto.poder %></p>
+  <div class="detalle-container">
+    <h1><%= objeto.nombre %></h1>
+    <p><strong>Descripción:</strong> <%= objeto.descripcion %></p>
+    <p><strong>Poder:</strong> <%= objeto.poder %></p>
+    <p><strong>Creado por:</strong> <%= objeto.owner.username %></p>
+    <p><strong>Creado:</strong> <%= objeto.createdAt.toLocaleString() %></p>
 
-  <p><a href="/editar/<%= objeto.id %>">Editar objeto</a></p>
-  <form action="/eliminar/<%= objeto.id %>" method="POST" onsubmit="return confirm('¿Seguro que querés eliminar este objeto?');">
-  <button type="submit">Eliminar objeto</button>
-</form>
-
-  <a href="/">← Volver al inicio</a>
+    <div class="acciones">
+      <% if (currentUser && currentUser._id.toString() === objeto.owner._id.toString()) { %>
+        <a href="/editar/<%= objeto._id %>">Editar objeto</a>
+        <form style="display:inline;" action="/eliminar/<%= objeto._id %>" method="POST" onsubmit="return confirm('¿Seguro que querés eliminar este objeto?');">
+          <button type="submit" class="btn-eliminar">Eliminar objeto</button>
+        </form>
+      <% } %>
+      <a href="/perfil/<%= objeto.owner.username %>">← Volver al perfil</a>
+    </div>
+  </div>
 </body>
 </html>

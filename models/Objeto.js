@@ -1,3 +1,4 @@
+// models/Objeto.js
 const mongoose = require('mongoose');
 
 const objetoSchema = new mongoose.Schema({
@@ -8,7 +9,8 @@ const objetoSchema = new mongoose.Schema({
   },
   descripcion: {
     type: String,
-    maxlength: [200, 'La descripción no puede tener más de 200 caracteres.']
+    maxlength: [200, 'La descripción no puede tener más de 200 caracteres.'],
+    trim: true,
   },
   poder: {
     type: Number,
@@ -18,7 +20,14 @@ const objetoSchema = new mongoose.Schema({
       validator: Number.isInteger,
       message: 'El poder debe ser un número entero.'
     }
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Usuario',
+    required: true
   }
+}, {
+  timestamps: true
 });
 
 const Objeto = mongoose.model('Objeto', objetoSchema);
